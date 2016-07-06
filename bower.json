@@ -1,0 +1,24 @@
+
+{
+  "name": "meshblu-json-schema-resolver",
+  "description": "The schemas. Resolve them. In Bower.",
+  "main": "dist/bundle.js",
+  "authors": [
+    "Octoblu",
+    "Inc."
+  ],
+  "license": "MIT",
+  "keywords": [
+    "octoblu",
+    "json-schema"
+  ],
+  "homepage": "https://github.com/octoblu/meshblu-json-schema-resolver",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}
