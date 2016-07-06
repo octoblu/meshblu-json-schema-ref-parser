@@ -1,6 +1,6 @@
 $RefParser  = require 'json-schema-ref-parser'
 MeshbluHttp = require 'browser-meshblu-http'
-URL         = require 'url'
+URL         = require 'url-parse'
 
 #It's dumb, but it saves 80k!
 trim        = require 'lodash/trim'
@@ -19,8 +19,9 @@ class MeshbluJsonSchemaResolver
     $RefParser.dereference schema, {resolve: resolvers}, callback
 
   _readMeshbluDevice: ({url}, callback) =>
-    parsedUrl = URL.parse url
-    deviceUuid = _.trim parsedUrl.path, '/'
+    parsedUrl = new URL url
+    deviceUuid = _.trim(parsedUrl.pathname, '/') || parsedUrl.host
+    
     @meshblu.device deviceUuid, callback
 
     return

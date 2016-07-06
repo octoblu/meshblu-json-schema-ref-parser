@@ -1,6 +1,6 @@
 {
   "name": "meshblu-json-schema-resolver",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Resolve $refs in JSON schema - even when they point to other Meshblu devices",
   "main": "./index.js",
   "browser": {
@@ -38,6 +38,7 @@
   "dependencies": {
     "browser-meshblu-http": "^5.2.8",
     "json-schema-ref-parser": "^3.1.2",
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "url-parse": "^1.1.1"
   }
 }
