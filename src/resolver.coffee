@@ -19,7 +19,7 @@ class MeshbluJsonSchemaResolver
     parsedUrl = URL.parse url
     deviceUuid = _.trim parsedUrl.path, '/'
     @meshblu.device deviceUuid, callback
-    
+
     return
 
 module.exports = MeshbluJsonSchemaResolver
