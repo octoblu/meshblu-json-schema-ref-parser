@@ -1,7 +1,10 @@
 $RefParser  = require 'json-schema-ref-parser'
 MeshbluHttp = require 'browser-meshblu-http'
 URL         = require 'url'
-_           = require 'lodash'
+
+#It's dumb, but it saves 80k!
+trim        = require 'lodash/trim'
+_           = {trim}
 
 class MeshbluJsonSchemaResolver
   constructor: ({meshbluConfig}) ->
