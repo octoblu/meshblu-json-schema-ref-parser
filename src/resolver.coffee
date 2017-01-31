@@ -4,7 +4,8 @@ URL         = require 'url-parse'
 
 #It's dumb, but it saves 80k!
 trim        = require 'lodash/trim'
-_           = {trim}
+isEmpty     = require 'lodash/isEmpty'
+_           = {trim, isEmpty}
 
 class MeshbluJsonSchemaResolver
   constructor: ({meshbluConfig}) ->
@@ -19,9 +20,10 @@ class MeshbluJsonSchemaResolver
     $RefParser.dereference schema, {resolve: resolvers}, callback
 
   _readMeshbluDevice: ({url}, callback) =>
+    options = {}
     parsedUrl = new URL url
     deviceUuid = _.trim(parsedUrl.pathname, '/') || parsedUrl.host
-    options = {as: parsedUrl.auth} if parsedUrl.auth?
+    options.as = parsedUrl.auth unless _.isEmpty parsedUrl.auth
     @meshblu.device deviceUuid, options, callback
 
     return
