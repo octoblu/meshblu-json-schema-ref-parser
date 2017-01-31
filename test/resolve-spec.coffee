@@ -102,3 +102,40 @@ describe 'MeshbluJsonSchemaResolver', ->
               type: 'string'
 
         expect(@resolvedSchema.properties.name).to.deep.equal propertySchema
+
+
+    context 'When resolving a schema with a reference to a meshblu device property and an "as" property', ->
+      beforeEach 'meshblu device', ->
+        aDevice =
+          some:
+            property:
+              type: 'object'
+              properties:
+                color:
+                  type: 'string'
+        @meshblu
+          .get '/v2/devices/a-device-uuid'
+          .set 'x-meshblu-as', '5'
+          .reply 200, aDevice
+
+
+      beforeEach (done) ->
+
+        whateverSchema =
+          type: 'object'
+          properties:
+            name:
+              $ref: "meshbludevice://5@127.0.0.1:#{@meshblu.address().port}/a-device-uuid/#/some/property"
+            description:
+              type: 'string'
+
+        @sut.resolve whateverSchema, (error, @resolvedSchema) => done(error)
+
+      it 'should give us back the schema', ->
+        propertySchema =
+          type: 'object'
+          properties:
+            color:
+              type: 'string'
+
+        expect(@resolvedSchema.properties.name).to.deep.equal propertySchema
