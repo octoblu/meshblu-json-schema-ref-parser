@@ -21,8 +21,8 @@ class MeshbluJsonSchemaResolver
   _readMeshbluDevice: ({url}, callback) =>
     parsedUrl = new URL url
     deviceUuid = _.trim(parsedUrl.pathname, '/') || parsedUrl.host
-
-    @meshblu.device deviceUuid, {as: 5}, callback
+    options = {as: parsedUrl.auth} if parsedUrl.auth?
+    @meshblu.device deviceUuid, options, callback
 
     return
 
