@@ -1,6 +1,8 @@
+{describe,beforeEach,afterEach,it} = global
+{expect}                  = require 'chai'
+shmock                    = require 'shmock'
+enableDestroy             = require 'server-destroy'
 MeshbluJsonSchemaResolver = require '../src/resolver.coffee'
-shmock = require 'shmock'
-enableDestroy = require 'server-destroy'
 
 describe 'MeshbluJsonSchemaResolver', ->
   beforeEach 'start Meshblu', (done) ->
@@ -10,7 +12,7 @@ describe 'MeshbluJsonSchemaResolver', ->
   afterEach 'destroy Meshblu', (done) ->
     @meshblu.destroy done
 
-  context 'Created with a meshbluConfig', ->
+  describe 'Created with a meshbluConfig', ->
     beforeEach ->
       meshbluConfig =
         hostname: '127.0.0.1'
@@ -24,7 +26,7 @@ describe 'MeshbluJsonSchemaResolver', ->
     it 'should exist', ->
       expect(@sut).to.exist
 
-    context 'When resolving a schema', ->
+    describe 'When resolving a schema', ->
       beforeEach (done) ->
         @whateverSchema =
           type: 'object'
@@ -39,7 +41,7 @@ describe 'MeshbluJsonSchemaResolver', ->
       it 'should give us back the schema', ->
         expect(@resolvedSchema).to.deep.equal @whateverSchema
 
-    context 'When resolving a schema with a reference', ->
+    describe 'When resolving a schema with a reference', ->
       beforeEach 'start static file server', (done) ->
         @ref1Schema =
           type: 'number'
@@ -68,7 +70,7 @@ describe 'MeshbluJsonSchemaResolver', ->
       it 'should give us back the schema', ->
         expect(@resolvedSchema.properties.name).to.deep.equal @ref1Schema
 
-    context 'When resolving a schema with a reference to a meshblu device property', ->
+    describe 'When resolving a schema with a reference to a meshblu device property', ->
       beforeEach 'meshblu device', ->
         aDevice =
           some:
@@ -81,9 +83,7 @@ describe 'MeshbluJsonSchemaResolver', ->
           .get '/v2/devices/a-device-uuid'
           .reply 200, aDevice
 
-
       beforeEach (done) ->
-
         whateverSchema =
           type: 'object'
           properties:
@@ -104,7 +104,7 @@ describe 'MeshbluJsonSchemaResolver', ->
         expect(@resolvedSchema.properties.name).to.deep.equal propertySchema
 
 
-    context 'When resolving a schema with a reference to a meshblu device property and an "as" property', ->
+    describe 'When resolving a schema with a reference to a meshblu device property and an "as" property', ->
       beforeEach 'meshblu device', ->
         aDevice =
           some:
@@ -120,7 +120,6 @@ describe 'MeshbluJsonSchemaResolver', ->
 
 
       beforeEach (done) ->
-
         whateverSchema =
           type: 'object'
           properties:
@@ -137,5 +136,34 @@ describe 'MeshbluJsonSchemaResolver', ->
           properties:
             color:
               type: 'string'
-
         expect(@resolvedSchema.properties.name).to.deep.equal propertySchema
+
+    describe 'When resolving a schema with a reference to a meshblu device property', ->
+      beforeEach 'meshblu device', ->
+        @meshblu
+          .get '/v2/devices/a-device-uuid'
+          .set 'x-meshblu-as', '5'
+          .reply 200, {
+            shouldNotEndUpOnOriginalDevice: true
+          }
+
+      beforeEach (done) ->
+        @whateverSchema =
+          type: 'object'
+          properties:
+            name:
+              $ref: "meshbludevice://5@127.0.0.1:#{@meshblu.address().port}/a-device-uuid"
+            description:
+              type: 'string'
+
+        @sut.resolve @whateverSchema, (error, @resolvedSchema) =>
+          done(error)
+
+      it 'should not mutate whateverSchema', ->
+        expect(@whateverSchema).to.deep.equal
+          type: 'object'
+          properties:
+            name:
+              $ref: "meshbludevice://5@127.0.0.1:#{@meshblu.address().port}/a-device-uuid"
+            description:
+              type: 'string'

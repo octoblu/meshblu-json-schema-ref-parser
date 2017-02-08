@@ -1,13 +1,14 @@
 {
   "name": "meshblu-json-schema-resolver",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Resolve $refs in JSON schema - even when they point to other Meshblu devices",
   "main": "./index.js",
   "browser": {
     "./index.js": "./dist/bundle.js"
   },
   "scripts": {
-    "test": "istanbul cover _mocha -- -R spec --require coffee-coverage/register-istanbul",
+    "test": "mocha",
+    "test:watch": "npm run test -- --watch",
     "build": "webpack -p"
   },
   "repository": {
@@ -24,9 +25,7 @@
     "chai": "^3.5.0",
     "coffee-coverage": "^1.0.1",
     "coffee-loader": "^0.7.2",
-    "istanbul": "^0.4.4",
     "mocha": "^2.5.3",
-    "mocha-istanbul": "^0.2.0",
     "schmock": "0.0.5",
     "server-destroy": "^1.0.1",
     "shmock": "^0.8.1",
