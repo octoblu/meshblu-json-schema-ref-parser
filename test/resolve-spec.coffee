@@ -5,8 +5,8 @@ enableDestroy             = require 'server-destroy'
 MeshbluJsonSchemaResolver = require '../src/resolver.coffee'
 
 describe 'MeshbluJsonSchemaResolver', ->
-  beforeEach 'start Meshblu', (done) ->
-    @meshblu = shmock done
+  beforeEach 'start Meshblu', ->
+    @meshblu = shmock()
     enableDestroy @meshblu
 
   afterEach 'destroy Meshblu', (done) ->
@@ -27,7 +27,7 @@ describe 'MeshbluJsonSchemaResolver', ->
       expect(@sut).to.exist
 
     describe 'When resolving a schema', ->
-      beforeEach (done) ->
+      beforeEach 'waiting to resolve', (done) ->
         @whateverSchema =
           type: 'object'
           properties:
@@ -42,12 +42,12 @@ describe 'MeshbluJsonSchemaResolver', ->
         expect(@resolvedSchema).to.deep.equal @whateverSchema
 
     describe 'When resolving a schema with a reference', ->
-      beforeEach 'start static file server', (done) ->
+      beforeEach 'start static file server', ->
         @ref1Schema =
           type: 'number'
           description: '?'
 
-        @staticFileServer = shmock done
+        @staticFileServer = shmock()
         @staticFileServer
           .get '/schema/ref1'
           .reply 200, @ref1Schema
@@ -56,7 +56,7 @@ describe 'MeshbluJsonSchemaResolver', ->
       afterEach 'destroy Meshblu', (done) ->
         @staticFileServer.destroy done
 
-      beforeEach (done) ->
+      beforeEach 'do the thing', (done) ->
         whateverSchema =
           type: 'object'
           properties:

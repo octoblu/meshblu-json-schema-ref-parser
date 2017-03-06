@@ -19,6 +19,7 @@ class MeshbluJsonSchemaResolver
         canRead: /^meshbludevice:/i,
         read: @_readMeshbluDevice
     $RefParser.dereference schema, {resolve: resolvers}, callback
+    return # stupid promises
 
   _readMeshbluDevice: ({url}, callback) =>
     options = {}
@@ -26,6 +27,6 @@ class MeshbluJsonSchemaResolver
     deviceUuid = _.trim(parsedUrl.pathname, '/') || parsedUrl.host
     options.as = parsedUrl.auth unless _.isEmpty parsedUrl.auth
     @meshblu.device deviceUuid, options, callback
-    return
+    return # stupid promises
 
 module.exports = MeshbluJsonSchemaResolver
