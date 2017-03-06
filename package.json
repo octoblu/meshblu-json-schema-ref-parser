@@ -1,6 +1,6 @@
 {
   "name": "meshblu-json-schema-resolver",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Resolve $refs in JSON schema - even when they point to other Meshblu devices",
   "main": "./index.js",
   "browser": {
@@ -23,20 +23,20 @@
   "homepage": "https://github.com/octoblu/meshblu-json-schema-ref-parser#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "coffee-coverage": "^1.0.1",
-    "coffee-loader": "^0.7.2",
-    "mocha": "^2.5.3",
+    "coffee-coverage": "^2.0.1",
+    "coffee-loader": "^0.7.3",
+    "mocha": "^3.2.0",
     "schmock": "0.0.5",
     "server-destroy": "^1.0.1",
     "shmock": "^0.8.1",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
-    "webpack": "^1.13.1"
+    "webpack": "^2.2.1"
   },
   "dependencies": {
-    "browser-meshblu-http": "^6.2.0",
+    "browser-meshblu-http": "^6.4.4",
     "json-schema-ref-parser": "^3.1.2",
     "lodash": "^4.13.1",
-    "url-parse": "^1.1.1"
+    "url-parse": "^1.1.8"
   }
 }
