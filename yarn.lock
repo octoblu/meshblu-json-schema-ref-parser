@@ -205,9 +205,9 @@ brorand@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
 
-browser-meshblu-http@^6.4.4:
-  version "6.4.4"
-  resolved "https://registry.yarnpkg.com/browser-meshblu-http/-/browser-meshblu-http-6.4.4.tgz#171896f372f61e68b8799e52e942a3d5d267c2e8"
+browser-meshblu-http@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/browser-meshblu-http/-/browser-meshblu-http-6.5.0.tgz#0dc79b55e9ac2a206e6a1d3518794bbbf3ea8b40"
   dependencies:
     btoa "^1.1.2"
     lodash "^4.17.4"
@@ -2034,7 +2034,7 @@ superagent@^3.1.0, superagent@^3.4.3:
     qs "^6.1.0"
     readable-stream "^2.0.5"
 
-supports-color@3.1.2:
+supports-color@3.1.2, supports-color@^3.1.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
   dependencies:
@@ -2047,12 +2047,6 @@ supports-color@^0.2.0:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
-
-supports-color@^3.1.0:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
-  dependencies:
-    has-flag "^1.0.0"
 
 tapable@^0.2.5, tapable@~0.2.5:
   version "0.2.6"
