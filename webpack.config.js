@@ -2,19 +2,13 @@ var path              = require('path');
 var webpack           = require('webpack');
 
 var plugins = [
-  new webpack.NoErrorsPlugin(),
-  new webpack.optimize.OccurenceOrderPlugin(),
+  new webpack.NoEmitOnErrorsPlugin(),
+  new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify('production')
     }
   }),
-  new webpack.optimize.UglifyJsPlugin({
-    compressor: {
-      screw_ie8: true,
-      warnings: false
-    }
-  })
 ]
 
 module.exports = {
@@ -27,7 +21,7 @@ module.exports = {
     repl: "empty",
   },
   resolve: {
-    extensions: ['', '.js', '.coffee']
+    extensions: ['.js', '.coffee']
   },
   entry: [ './index.coffee' ],
   output: {
@@ -38,9 +32,9 @@ module.exports = {
   },
   plugins: plugins,
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.coffee$/, loader: 'coffee'
+        test: /\.coffee$/, loader: 'coffee-loader'
       }
     ]
   }
