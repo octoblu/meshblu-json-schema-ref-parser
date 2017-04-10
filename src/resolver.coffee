@@ -26,7 +26,11 @@ class MeshbluJsonSchemaResolver
     parsedUrl = new URL url
     deviceUuid = _.trim(parsedUrl.pathname, '/') || parsedUrl.host
     options.as = parsedUrl.auth unless _.isEmpty parsedUrl.auth
-    @meshblu.device deviceUuid, options, callback
+    @meshblu.device deviceUuid, options, (error, device) =>
+      if error?
+        error.uuid = deviceUuid
+        error.as = options.as
+      callback error, device
     return # stupid promises
 
 module.exports = MeshbluJsonSchemaResolver
