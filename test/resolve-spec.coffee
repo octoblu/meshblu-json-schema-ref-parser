@@ -41,6 +41,22 @@ describe 'MeshbluJsonSchemaResolver', ->
       it 'should give us back the schema', ->
         expect(@resolvedSchema).to.deep.equal @whateverSchema
 
+    describe 'When resolving a schema with a file reference ', ->
+      beforeEach 'waiting to resolve', (done) ->
+        @whateverSchema =
+          type: 'object'
+          properties:
+            name:
+              type: 'string'
+            description:
+              type:
+                $ref: '/etc/passwd'
+
+        @sut.resolve @whateverSchema, (@error, @resolvedSchema) => done()
+
+      it 'should not give us back /etc/passwd', ->
+        expect(@error).to.exist
+
     describe 'When resolving a schema with a reference', ->
       beforeEach 'start static file server', ->
         @ref1Schema =

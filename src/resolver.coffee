@@ -15,6 +15,9 @@ class MeshbluJsonSchemaResolver
   resolve: (schema, callback) =>
     schema = _.cloneDeep schema
     resolvers =
+      file: false
+      http:
+        timeout: 15000
       meshbludevice:
         canRead: /^meshbludevice:/i,
         read: @_readMeshbluDevice
