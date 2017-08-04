@@ -183,3 +183,26 @@ describe 'MeshbluJsonSchemaResolver', ->
               $ref: "meshbludevice://5@127.0.0.1:#{@meshblu.address().port}/a-device-uuid"
             description:
               type: 'string'
+
+    describe 'When resolving a schema with a reference to a meshblu device property that does not exist', ->
+      beforeEach 'meshblu device', ->
+        @meshblu
+          .get '/v2/devices/a-device-uuid'
+          .reply 200, {
+            yup: true
+          }
+
+      beforeEach (done) ->
+        schema =
+          type: 'object'
+          properties:
+            name:
+              $ref: "meshbludevice://127.0.0.1:#{@meshblu.address().port}/a-device-uuid/#/doesNotExist"
+            description:
+              type: 'string'
+
+        @sut.resolve schema, (error, @resolvedSchema) =>
+          done error
+
+      it 'should return something to exist', ->
+        expect(@resolvedSchema.properties.name).to.not.exist

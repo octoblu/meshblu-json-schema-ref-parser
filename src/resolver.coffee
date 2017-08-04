@@ -1,4 +1,4 @@
-$RefParser  = require 'json-schema-ref-parser'
+$RefParser  = require '@octoblu/json-schema-ref-parser'
 MeshbluHttp = require 'browser-meshblu-http'
 URL         = require 'url-parse'
 
