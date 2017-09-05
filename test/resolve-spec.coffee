@@ -2,7 +2,7 @@
 {expect}                  = require 'chai'
 shmock                    = require 'shmock'
 enableDestroy             = require 'server-destroy'
-MeshbluJsonSchemaResolver = require '../src/resolver.coffee'
+MeshbluJsonSchemaResolver = require '..'
 
 describe 'MeshbluJsonSchemaResolver', ->
   beforeEach 'start Meshblu', ->
@@ -191,6 +191,25 @@ describe 'MeshbluJsonSchemaResolver', ->
           .reply 200, {
             yup: true
           }
+
+      beforeEach (done) ->
+        schema =
+          type: 'object'
+          properties:
+            name:
+              $ref: "meshbludevice://127.0.0.1:#{@meshblu.address().port}/a-device-uuid/#/doesNotExist"
+            description:
+              type: 'string'
+
+        @sut.resolve schema, (error, @resolvedSchema) =>
+          done error
+
+      it 'should return something to exist', ->
+        expect(@resolvedSchema.properties.name).to.not.exist
+
+    describe 'When resolving a schema with a reference to a meshblu device property but meshbludevice is disabled', ->
+      beforeEach 'sut', ->
+        @sut = new MeshbluJsonSchemaResolver skipInvalidMeshbluDevice: true
 
       beforeEach (done) ->
         schema =
