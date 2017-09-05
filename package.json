@@ -1,6 +1,6 @@
 {
   "name": "meshblu-json-schema-resolver",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Resolve $refs in JSON schema - even when they point to other Meshblu devices",
   "main": "./index.js",
   "browser": {
@@ -24,7 +24,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "coffee-coverage": "^2.0.1",
-    "coffee-loader": "^0.8.0",
+    "coffee-loader": "^0.7.3",
     "mocha": "^3.5.0",
     "schmock": "0.0.5",
     "server-destroy": "^1.0.1",
